@@ -1,4 +1,4 @@
-const apiUrl = 'https://mocki.io/v1/57743d60-4e0a-4624-bd2e-33138b2990c5';
+const apiUrl = 'https://mocki.io/v1/acd8033b-8bf5-4c6e-8fdb-cfaa8825e5f7';
 let destinations = [];
 let amenities = [];
 
