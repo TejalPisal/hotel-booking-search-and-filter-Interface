@@ -1,37 +1,88 @@
-/* Existing styles */
+/* Hotel card styles */
 .hotel-card {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease; 
 }
+
+/* Hover effect for the hotel card */
+.hotel-card:hover {
+    transform: scale(1.05);
+}
+
+/* Hover info section for hotel card */
+.hotel-card .hover-info {
+    display: none; 
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7); 
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Makes hover info visible when hovering over the hotel card */
+.hotel-card:hover .hover-info {
+    display: block;
+}
+
+/* Hotel image styles */
 .hotel-img {
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    object-fit: cover; 
 }
+
+/* Autocomplete suggestions for destination search */
 .autocomplete-suggestions {
     max-height: 150px;
-    overflow-y: auto;
+    overflow-y: auto; 
     border: 1px solid #ccc;
     background-color: #fff;
     position: absolute;
     z-index: 10;
     width: 100%;
     max-width: 300px;
-    box-sizing: border-box;
+    box-sizing: border-box; 
 }
+
+/* Styling individual suggestion items in the autocomplete */
 .autocomplete-suggestion {
     padding: 8px;
     cursor: pointer;
 }
+
+/* Hover effect for individual autocomplete suggestions */
 .autocomplete-suggestion:hover {
-    background-color: #ddd;
+    background-color: #ddd; 
 }
 
-/* Star rating dropdown style */
+/* Star rating dropdown styling */
 #star-rating option {
-    font-size: 1.5rem;
+    font-size: 1.5rem; 
 }
 
-/* Collapsible Amenities Section */
+/* Collapsible amenities section */
 #amenitiesCollapse {
     margin-top: 10px;
+}
+
+/* Hotel container image styling */
+.hotel-container img { 
+    width: 100%;
+    height: 200px; 
+    object-fit: contain; 
+    border-radius: 8px; 
+}
+
+/* Ensures the image inside hotel card is consistent */
+.hotel-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
 }
