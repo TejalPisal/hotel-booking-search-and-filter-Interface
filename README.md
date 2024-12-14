@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This Hotel Booking Search and Filter Interface App. It provides users with a modern, responsive, and visually appealing interface to explore hotels, view detailed information, and search for destinations with real-time autocomplete suggestions.
+This is a Hotel Booking Search and Filter Interface App. It provides users with a modern, responsive, and visually appealing interface to explore hotels, view detailed information, and search for destinations with real-time autocomplete suggestions.
 
 ## Features
 
