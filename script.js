@@ -1,8 +1,8 @@
-const apiUrl = 'https://mocki.io/v1/0f95c38c-cdcd-4b32-b3f3-d6dacf9a0f1c';
+const apiUrl = 'https://mocki.io/v1/57743d60-4e0a-4624-bd2e-33138b2990c5';
 let destinations = [];
 let amenities = [];
 
-// Fetching Data
+// Fetching Data from API
 fetch(apiUrl)
   .then(response => response.json())
   .then(data => {
@@ -19,6 +19,7 @@ fetch(apiUrl)
 const destinationInput = document.getElementById('destination');
 const suggestionsBox = document.getElementById('suggestions');
 
+// Event listener for the input field to filter and show destination suggestions
 destinationInput.addEventListener('input', function () {
   const query = destinationInput.value.toLowerCase();
   if (query.length > 0) {
@@ -29,6 +30,7 @@ destinationInput.addEventListener('input', function () {
   }
 });
 
+// Function to show filtered destination suggestions in a dropdown
 function showSuggestions(suggestions) {
   suggestionsBox.innerHTML = '';
   suggestions.forEach(suggestion => {
@@ -43,7 +45,7 @@ function showSuggestions(suggestions) {
   });
 }
 
-// Initialize the Date Range Picker (Flatpickr)
+// Initialize the Date Range Picker Flatpickr
 flatpickr("#dates", {
   mode: "range",
   dateFormat: "Y-m-d",
@@ -83,6 +85,7 @@ const priceSlider = document.getElementById('price-range');
 const minPriceLabel = document.getElementById('min-price');
 const maxPriceLabel = document.getElementById('max-price');
 
+// Created price slider
 noUiSlider.create(priceSlider, {
   start: [0, 30000],
   connect: true,
@@ -97,6 +100,7 @@ noUiSlider.create(priceSlider, {
   }
 });
 
+// Update the min-max price labels when the slider value changes
 priceSlider.noUiSlider.on('update', function (values, handle) {
   if (handle === 0) {
     minPriceLabel.innerText = values[0];
@@ -110,6 +114,7 @@ const distanceSlider = document.getElementById('distance-range');
 const minDistanceLabel = document.getElementById('min-distance');
 const maxDistanceLabel = document.getElementById('max-distance');
 
+// Distance slider
 noUiSlider.create(distanceSlider, {
   start: [0, 10],
   connect: true,
@@ -182,35 +187,73 @@ function displayHotels(hotels) {
   });
 }
 
-// Function to show hotel details in modal
+// Function to show hotel details in the modal dynamically
 function showHotelDetails(hotelId) {
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      const hotels = data.data.hotels;
-      const selectedHotel = hotels.find(hotel => hotel.id === hotelId);
-
-      document.getElementById('hotelModalLabel').innerText = selectedHotel.name;
-      document.getElementById('hotelDescription').innerHTML = `<p>${selectedHotel.description}</p>`;
-      document.getElementById('cancellationPolicy').innerText = selectedHotel.cancellation_policy;
-
-      const carouselImages = document.getElementById('carouselImages');
-      carouselImages.innerHTML = `
-        <div class="carousel-item active">
-          <img src="${selectedHotel.image}" class="d-block w-100" alt="${selectedHotel.name}">
-        </div>
-      `;
-
-      const amenities = selectedHotel.amenities.map(amenity => `<li>${amenity}</li>`).join('');
-      document.getElementById('hotelAmenities').innerHTML = `<h5>Amenities:</h5><ul>${amenities}</ul>`;
-
-      document.getElementById('dynamicPrice').innerText = `Price per night: ₹${selectedHotel.discounted_price}`;
-
-      const hotelModal = new bootstrap.Modal(document.getElementById('hotelModal'));
-      hotelModal.show();
-    })
-    .catch(error => console.error('Error fetching hotel details:', error));
-}
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        const hotels = data.data.hotels;
+        const selectedHotel = hotels.find(hotel => hotel.id === hotelId);
+  
+        if (selectedHotel) {
+          // Set modal title
+          document.getElementById('hotelModalLabel').innerText = selectedHotel.name;
+  
+          // Set hotel description
+          document.getElementById('hotelDescription').innerHTML = `<p>${selectedHotel.description}</p>`;
+  
+          // Set cancellation policy
+          document.getElementById('cancellationPolicy').innerText = selectedHotel.cancellation_policy;
+  
+          // Set carousel images
+          const carouselImages = document.getElementById('carouselImages').querySelector('.carousel-inner');
+          
+          // Check if selectedHotel has an array of images
+          if (selectedHotel.carousel_images && selectedHotel.carousel_images.length > 0) {
+            carouselImages.innerHTML = ''; // Clear previous images
+            selectedHotel.carousel_images.forEach((image, index) => {
+              const isActive = index === 0 ? 'active' : ''; // Make the first image active
+              carouselImages.innerHTML += `
+                <div class="carousel-item ${isActive}">
+                  <img src="${image}" class="d-block w-100 carousel-img" alt="${selectedHotel.name}">
+                </div>
+              `;
+            });
+          } else {
+            carouselImages.innerHTML = '<p>No images available for this hotel.</p>';
+          }
+  
+          // Set amenities
+          const amenities = selectedHotel.amenities.map(amenity => `<li>${amenity}</li>`).join('');
+          document.getElementById('hotelAmenities').innerHTML = `<h5>Amenities:</h5><ul>${amenities}</ul>`;
+  
+          // Set dynamic pricing
+          const dynamicPriceElement = document.getElementById('dynamicPrice');
+          const pricePerNight = selectedHotel.discounted_price;
+          dynamicPriceElement.innerText = `Price per night: ₹${pricePerNight}`;
+  
+          const bookingForm = document.getElementById('bookingForm');
+          bookingForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const checkInDate = document.getElementById('checkIn').value;
+            const checkOutDate = document.getElementById('checkOut').value;
+            const numberOfGuests = document.getElementById('guests').value;
+  
+            const checkIn = new Date(checkInDate);
+            const checkOut = new Date(checkOutDate);
+            const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+            const totalPrice = pricePerNight * nights * numberOfGuests;
+  
+            alert(`Booking Confirmed! Total price: ₹${totalPrice}`);
+          });
+  
+          // Show the modal
+          const modal = new bootstrap.Modal(document.getElementById('hotelModal'));
+          modal.show();
+        }
+      })
+      .catch(error => console.error('Error fetching hotel details:', error));
+}  
 
 // Filter hotels based on selected amenities
 function filterHotelsByAmenities(hotels) {

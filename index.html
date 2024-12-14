@@ -131,52 +131,60 @@
         <div class="row" id="hotel-list"></div>
     </div>
 
-    <!-- Modal for displaying detailed hotel information -->
     <div class="modal fade" id="hotelModal" tabindex="-1" aria-labelledby="hotelModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="hotelModalLabel">Hotel Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Carousel for displaying larger images of the hotel -->
-            <div id="hotelCarousel" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner" id="carouselImages"></div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#hotelCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#hotelCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="hotelModalLabel">Hotel Details</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <!-- Detailed hotel description -->
-            <div id="hotelDescription" class="mt-3"></div>
-            <div id="hotelAmenities"></div>
-
-            <!-- Booking form -->
-            <div class="mt-3">
-              <h5>Book Your Stay</h5>
-              <label for="bookingDates">Select Dates:</label>
-              <input type="text" id="bookingDates" class="form-control mb-3">
-              <label for="guestsModal">Guests:</label>
-              <input type="number" id="guestsModal" class="form-control mb-3" min="1" value="1">
-              <h6 id="dynamicPrice">Price per night: ₹</h6>
-              <button id="confirmBooking" class="btn btn-primary">Confirm Booking</button>
-            </div>
-
-            <!-- Cancellation policy information -->
-            <div class="mt-3">
-              <h6>Cancellation Policy:</h6>
-              <p id="cancellationPolicy"></p>
+            <div class="modal-body">
+              <!-- Carousel for Images -->
+              <div id="carouselImages" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <!-- Carousel items will be inserted here -->
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselImages" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+      
+              <!-- Hotel Description -->
+              <div id="hotelDescription"></div>
+      
+              <!-- Cancellation Policy -->
+              <div id="cancellationPolicy"></div>
+      
+              <!-- Hotel Amenities -->
+              <div id="hotelAmenities"></div>
+      
+              <!-- Dynamic Price -->
+              <div id="dynamicPrice"></div>
+      
+              <!-- Booking Form -->
+              <form id="bookingForm">
+                <div class="mb-3">
+                  <label for="checkIn" class="form-label">Check-in Date</label>
+                  <input type="date" class="form-control" id="checkIn" required>
+                </div>
+                <div class="mb-3">
+                  <label for="checkOut" class="form-label">Check-out Date</label>
+                  <input type="date" class="form-control" id="checkOut" required>
+                </div>
+                <div class="mb-3">
+                  <label for="guests" class="form-label">Number of Guests</label>
+                  <input type="number" class="form-control" id="guests" min="1" value="1" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Confirm Booking</button>
+              </form>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
